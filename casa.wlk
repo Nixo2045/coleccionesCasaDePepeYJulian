@@ -1,9 +1,13 @@
 import cosas.*
+import cuentaBancaria.*
+
 object casa {
     const cosas = []
+    var cuentaActual = cuentaCombinada
 
     method comprar(cosa) {
         cosas.add(cosa)
+        cuentaActual.saldo() - cosa.precio()
     }
     method cantidadDeCosasAComprar() {
         return cosas.size()
@@ -40,5 +44,20 @@ object casa {
     method fueComprado(unaCosa) {
         return cosas.contains(unaCosa)
     }
+    method faltaComida() {
+        return self.cosasQueSonComida() < 2
+    }
+    method cosasQueSonComida() {
+        return cosas.count({ a => a.esComida()  })        
+    }
 
+    // Cuenta Bancaria
+
+    method gastar(importe) {
+        cuentaActual.extraer(importe)
+    }
+    method dineroDisponible() = cuentaActual
+    method cambiarCuentaActual(unaCuenta) {
+        cuentaActual = unaCuenta
+    }
 }
